@@ -1,0 +1,106 @@
+header{
+    background-color: #98ff98;
+    padding: 20px 20px;
+
+}
+body{
+
+    background: light grey;
+    font-family: "Verdana", Verdana, serif;
+        text-align: centeR;
+
+    }
+
+h1{
+    color: white;
+}
+
+h2{
+    color: white;
+}
+
+h3{
+    size: 15px;
+    color: black;
+    }
+p {
+     font-family: "Verdana", Verdana, serif;
+ }
+
+ .column {
+     float: left;
+     width: 20%;
+ }
+
+ /* Clear floats after the columns */
+ .row:after {
+     content: "";
+     display: table;
+     clear: both;
+ }
+ .divcolumn {
+
+      float: left;
+      width: 50%;
+      height: 500px;
+      background: grey;
+  }
+
+  /* Clear floats after the columns */
+  .divider:after {
+      content: "";
+      display: table;
+      clear: both;
+  }
+
+
+.br{
+height: 100px;
+}
+
+.br2{
+height:50px;
+}
+
+.map{
+    width:50%;
+
+    }
+nav {
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #98ff98;
+    text-align: center;
+
+}
+
+li {
+    float: left;
+    display: inline;
+}
+
+li a {
+    display: block;
+    color:  grey;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+    color: white;
+    font-size: 20px;
+}
+
+a{
+color: black;
+}
