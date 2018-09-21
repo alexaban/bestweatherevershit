@@ -86,7 +86,7 @@ public class html  extends HttpServlet {
             out.println("                <div id=\"map\" style=\"height: 500px; align: center;\"></div>\n ");
             out.println("            </div>\n ");
             out.println("            <div class=\"divcolumn\">\n ");
-            out.println("                <p> troll me not pls</p>\n ");
+            out.println("                <p> Sett metode for å hente riktig icon her</p>\n ");
             out.println("            </div>\n ");
             out.println("        </div>\n ");
             out.println("    </div>\n ");
