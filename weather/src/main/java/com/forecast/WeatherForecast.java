@@ -12,7 +12,7 @@ import java.util.Set;
 
 
 @SpringBootApplication
-public class WeatherForecast {
+public class WeatherForecast extends HttpServlet{
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(WeatherForecast.class, args);
