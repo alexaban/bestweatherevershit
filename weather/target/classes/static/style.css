@@ -46,6 +46,21 @@ p {
       background: grey;
   }
 
+   .divcolumn2 {
+
+        float: left;
+        width: 49%;
+        height: 500px;
+        background: grey;
+    }
+     .divcolumn2 {
+
+            float: left;
+            width: 49%;
+            height: 500px;
+            background: grey;
+        }
+
   /* Clear floats after the columns */
   .divider:after {
       content: "";
