@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Set;
 
 
 @SpringBootApplication
@@ -40,8 +41,9 @@ public class WeatherForecast {
 		Object result = winfo.get("weatherdata");
 
 		//String next2 = winfo.toString();
-		System.out.println(result);
-		//find(jsondata, "temperature");
+		//checkKey(jsondata, "from");
+		System.out.println(checkKey(jsondata, "from"));
+
 
 
 
@@ -67,7 +69,7 @@ public class WeatherForecast {
 
 	}
 
-	 static Object find(JSONObject jObj, String k) throws JSONException {
+	 /*static Object find(JSONObject jObj, String k) throws JSONException {
 		Iterator<?> keys = jObj.keys();
 
 		while (keys.hasNext()) {
@@ -91,5 +93,22 @@ public class WeatherForecast {
 			}
 		}
 		return null;
+	}*/
+
+	public static Object checkKey(JSONObject object, String searchedKey) {
+		boolean exists = object.has(searchedKey);
+		Object obj = null;
+		if(exists){
+			obj = object.get(searchedKey);
+		}
+		if(!exists) {
+			Set<String> keys = object.keySet();
+			for(String key : keys){
+				if ( object.get(key) instanceof JSONObject ) {
+					obj = checkKey((JSONObject)object.get(key), searchedKey);
+				}
+			}
+		}
+		return obj;
 	}
 }
