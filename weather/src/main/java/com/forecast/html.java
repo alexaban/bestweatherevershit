@@ -23,8 +23,31 @@ public class html  extends HttpServlet {
 
         WeatherAPI wth = new WeatherAPI();
 
-        String latO = "59.913971";
-        String lonO = "10.752260";
+        String osloLat = "59.913971";
+        String osloLon = "10.752260";
+
+        String bergenLat = "60.395810";
+        String bergenLon = "5.331776";
+
+        String stavangerLat = "58.974964";
+        String stavangerLon = "5.733652";
+
+        String kristiansandLat = "58.164346";
+        String kristiansandLon = "8.020225";
+
+        String trondheimLat = "63.4187958";
+        String trondheimLon = "10.36855152";
+
+        WeatherData osloWeather = wth.information(osloLat, osloLon);
+        WeatherData bergenWeather = wth.information(bergenLat, bergenLon);
+        WeatherData stavangerWeather = wth.information(stavangerLat,stavangerLon);
+        WeatherData kristiansandWeather = wth.information(kristiansandLat,kristiansandLon);
+        WeatherData trondheimWeather = wth.information(trondheimLat,trondheimLon);
+
+
+        WeatherData[] locations = {osloWeather, bergenWeather, stavangerWeather, kristiansandWeather,trondheimWeather};
+
+
 
 
         try {
@@ -101,16 +124,16 @@ public class html  extends HttpServlet {
             out.println("                     <h1> Today</h1>\n ");
             out.println("                     <div class=\"divcolumn3\">\n ");
             out.println("                         <div class=\"column\"><i class=\"fas fa-umbrella\" style=\"font-size:60px;color:blue;align:center;\"></i></div>\n ");
-            out.println("                         <p> Temperature" + "</p>\n ");
-            out.println("                         <p> Weather type: " + "</p>\n ");
+            out.println("                         <p id='todayTemperature'>Temperature:" + "</p>\n ");
+            out.println("                         <p id='todaySymbol'> Weather type: " + "</p>\n ");
             out.println("                     </div>\n ");
             out.println("                </div>\n ");
             out.println("                <div class=\"divcolumn2\">\n ");
             out.println("                     <h1> Tomorrow</h1>\n ");
             out.println("                     <div class=\"divcolumn3\">\n ");
             out.println("                         <div class=\"column\"><i class=\"fas fa-umbrella\" style=\"font-size:60px;color:blue;align:center;\"></i></div>\n ");
-            out.println("                         <p> Temperature: " + "</p>\n ");
-            out.println("                         <p> Weather type: " + "</p>\n ");
+            out.println("                         <p id='tomorrowTemperature'> Temperature: " + "</p>\n ");
+            out.println("                         <p id='tomorrowSymbol'> Weather type: " +  "</p>\n ");
             out.println("                     </div>\n ");
             out.println("                </div>\n ");
             out.println("            </div>\n ");
@@ -147,23 +170,8 @@ public class html  extends HttpServlet {
                     "\n" +
                     "    var marker, i;\n" +
                     "\n" +
-                    "    for (i = 0; i < locations.length; i++) {\n" +
-                    "      marker = new google.maps.Marker({\n" +
-                    "        position: new google.maps.LatLng(locations[i][1], locations[i][2]),\n" +
-                    "        map: map\n" +
-                    "      });\n" +
-                    "\n" +
-                    "      google.maps.event.addListener(marker, 'click', (function(marker, i) {\n" +
-                    "        return function() {\n" +
-                    "          infowindow.setContent(locations[i][0]);\n" +
-                    "<form action=\"${localhost:8081/WeatherAPI\" method=\"post\">\n" +
-                            "    <input type=\"submit\" name=\"i\" value=\"Button 1\" />\n" +
-                            "</form>" +
-                    "          wth.information(locations[i][1].toString(),locations[i][2].toString());\n" +
-                    "          infowindow.open(map, marker);\n" +
-                    "        }\n" +
-                    "      })(marker, i));\n" +
-                    "    } </script>\n" +
+                    javaScriptLocationsLoop(locations) +
+                    " </script>\n" +
                     "\n" +
                     "\n" +
                     "\n" +
@@ -176,4 +184,34 @@ public class html  extends HttpServlet {
             out.close();
         }
     }
+
+    private String extractValuesToJavaScript(WeatherData[] weatherDataArray, int index) {
+        WeatherData weatherData = weatherDataArray[index];
+
+        return  "      marker = new google.maps.Marker({\n" +
+                "        position: new google.maps.LatLng(locations[i][1], locations[i][2]),\n" +
+                "        map: map\n" +
+                "      });\n" +
+                "\n" +
+                "      google.maps.event.addListener(marker, 'click', function() {\n" +
+                "    document.getElementById('todayTemperature').innerHTML = 'Temperature: "+ weatherData.getTemperature() +"'\n" +
+                "    document.getElementById('todaySymbol').innerHTML = 'Weather type: "+ weatherData.getSymbol() +"'\n" +
+                "    document.getElementById('tomorrowTemperature').innerHTML = 'Temperature: "+ weatherData.getTemperatureTomorrow() +"'\n" +
+                "    document.getElementById('tomorrowSymbol').innerHTML = 'Weather type: " + weatherData.getSymbolTomorrow() + "'\n" +
+                "  })\n";
+    }
+
+    private String javaScriptLocationsLoop(WeatherData[] weatherDataArray) {
+        StringBuilder jsLoopStr = new StringBuilder("for (var i = 0; i < locations.length; i++){");
+
+        for (int i = 0; i < weatherDataArray.length; i++) {
+            jsLoopStr.append(extractValuesToJavaScript(weatherDataArray, i));
+        }
+
+        jsLoopStr.append("}");
+
+        return jsLoopStr.toString();
+    }
+
+
 }
